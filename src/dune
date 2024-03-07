@@ -1,0 +1,18 @@
+(library
+ (foreign_stubs
+  (language c)
+  (names conditional_stubs int_stubs float_stubs)
+  (flags
+   :standard
+   (:include builtin_flags.sexp)))
+ (name ocaml_intrinsics_kernel)
+ (public_name ocaml_intrinsics_kernel)
+ (libraries)
+ (js_of_ocaml
+  (javascript_files runtime.js))
+ (preprocess no_preprocessing))
+
+(rule
+ (targets builtin_flags.sexp)
+ (action
+  (run ./discover/discover.exe -o %{targets})))
