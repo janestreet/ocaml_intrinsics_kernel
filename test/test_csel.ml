@@ -13,7 +13,8 @@ let%expect_test "csel int" =
     2 2
     4 4
     6 6
-    6 6 |}]
+    6 6
+    |}]
 ;;
 
 let%expect_test "csel max int value" =
@@ -24,7 +25,8 @@ let%expect_test "csel max int value" =
     printf "%d %d\n" expect actual);
   [%expect {|
     1 1
-    5 5 |}]
+    5 5
+    |}]
 ;;
 
 let%expect_test "csel max float value" =
@@ -37,7 +39,7 @@ let%expect_test "csel max float value" =
     0.500000 0.500000
     0.100000 0.100000
     5.000000 5.000000
- |}]
+    |}]
 ;;
 
 let%expect_test "csel max int untagged" =
@@ -48,7 +50,8 @@ let%expect_test "csel max int untagged" =
     printf "%d %d\n" expect actual);
   [%expect {|
     1 1
-    5 5 |}]
+    5 5
+    |}]
 ;;
 
 let%expect_test "csel max int64 unboxed" =
@@ -60,7 +63,8 @@ let%expect_test "csel max int64 unboxed" =
   [%expect {|
     1 1
     5 5
-    9223372036854775807 9223372036854775807 |}]
+    9223372036854775807 9223372036854775807
+    |}]
 ;;
 
 let%expect_test "csel max int32 unboxed" =
@@ -72,7 +76,8 @@ let%expect_test "csel max int32 unboxed" =
   [%expect {|
     1 1
     5 5
-    2147483647 2147483647 |}]
+    2147483647 2147483647
+    |}]
 ;;
 
 [%%import "config.h"]
@@ -87,7 +92,8 @@ let%expect_test "csel max nativeint unboxed" =
   [%expect {|
     1 1
     5 5
-    9223372036854775807 9223372036854775807 |}]
+    9223372036854775807 9223372036854775807
+    |}]
 ;;
 
 [%%else]
@@ -101,7 +107,8 @@ let%expect_test "csel max nativeint unboxed" =
   [%expect {|
     1 1
     5 5
-    2147483647 2147483647 |}]
+    2147483647 2147483647
+    |}]
 ;;
 
 [%%endif]
@@ -136,7 +143,8 @@ let%expect_test "csel sideffects" =
     hello 0
     world 1
     hello 1
-    5 5 |}]
+    5 5
+    |}]
 ;;
 
 let%expect_test "min extra moves" =
@@ -166,7 +174,8 @@ let%expect_test "min extra moves" =
     printf "%d\n" (min2 a b));
   [%expect {|
     0 0
-    4 4 |}]
+    4 4
+    |}]
 ;;
 
 let%expect_test "float deadcode" =

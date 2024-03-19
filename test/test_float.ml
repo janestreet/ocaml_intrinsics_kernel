@@ -24,7 +24,8 @@ let%expect_test "min and max" =
     min -0 0 = 0
     min 0 -0 = -0
     min nan 0 = 0
-    min 0 nan = nan |}];
+    min 0 nan = nan
+    |}];
   List.iter args ~f:(fun (x, y) -> printf "max %.19g %.19g = %.19g\n" x y (I.max x y));
   [%expect
     {|
@@ -35,5 +36,6 @@ let%expect_test "min and max" =
     max -0 0 = 0
     max 0 -0 = -0
     max nan 0 = 0
-    max 0 nan = nan |}]
+    max 0 nan = nan
+    |}]
 ;;
