@@ -1,7 +1,7 @@
 (library
  (foreign_stubs
   (language c)
-  (names conditional_stubs int_stubs float_stubs))
+  (names conditional_stubs int_stubs float_stubs csel_value))
  (name ocaml_intrinsics_kernel)
  (public_name ocaml_intrinsics_kernel)
  (libraries)

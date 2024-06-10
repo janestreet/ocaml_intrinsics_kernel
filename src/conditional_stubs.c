@@ -19,8 +19,3 @@ intnat caml_csel_nativeint_unboxed(value v_cond, intnat ifso, intnat ifnot)
 {
   return (Bool_val(v_cond) ? ifso : ifnot);
 }
-
-CAMLprim value caml_csel_value(value v_cond, value v_true, value v_false)
-{
-  return (Bool_val(v_cond) ? v_true : v_false);
-}
