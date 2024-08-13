@@ -26,10 +26,6 @@ double caml_sse2_float64_max(double x, double y)
 
 #include <math.h>
 
-#if defined(__GNUC__)
-__attribute__((optimize("no-math-errno")))
-#endif
-
 double caml_sse2_float64_min(double x, double y) {
   return x < y ? x : y;
 }
