@@ -118,72 +118,75 @@ let%expect_test "csel max int32#" =
     |}]
 ;;
 
-[%%import "config.h"]
-[%%ifdef JSC_ARCH_SIXTYFOUR]
+module%test [@tags "64-bits-only"] Arch64 = struct
+  let%expect_test "csel max nativeint unboxed" =
+    let inputs = [ 0n, 1n; 4n, 5n; Nativeint.max_value, Nativeint.min_value ] in
+    List.iter inputs ~f:(fun (a, b) ->
+      let expect = if Nativeint.(a > b) then a else b in
+      let actual = I.select_nativeint Nativeint.(a > b) a b in
+      printf "%nd %nd\n" expect actual);
+    [%expect
+      {|
+      1 1
+      5 5
+      9223372036854775807 9223372036854775807
+      |}]
+  ;;
 
-let%expect_test "csel max nativeint unboxed" =
-  let inputs = [ 0n, 1n; 4n, 5n; Nativeint.max_value, Nativeint.min_value ] in
-  List.iter inputs ~f:(fun (a, b) ->
-    let expect = if Nativeint.(a > b) then a else b in
-    let actual = I.select_nativeint Nativeint.(a > b) a b in
-    printf "%nd %nd\n" expect actual);
-  [%expect
-    {|
-    1 1
-    5 5
-    9223372036854775807 9223372036854775807
-    |}]
-;;
+  let%expect_test "csel max nativeint#" =
+    let inputs = [ 0n, 1n; 4n, 5n; Nativeint.max_value, Nativeint.min_value ] in
+    List.iter inputs ~f:(fun (a, b) ->
+      let a = Nativeint_u.of_nativeint a in
+      let b = Nativeint_u.of_nativeint b in
+      let expect = if Nativeint_u.(a > b) then a else b in
+      let actual = I.Unboxed.select_nativeint Nativeint_u.(a > b) a b in
+      printf
+        "%nd %nd\n"
+        (Nativeint_u.to_nativeint expect)
+        (Nativeint_u.to_nativeint actual));
+    [%expect
+      {|
+      1 1
+      5 5
+      9223372036854775807 9223372036854775807
+      |}]
+  ;;
+end
 
-let%expect_test "csel max nativeint#" =
-  let inputs = [ 0n, 1n; 4n, 5n; Nativeint.max_value, Nativeint.min_value ] in
-  List.iter inputs ~f:(fun (a, b) ->
-    let a = Nativeint_u.of_nativeint a in
-    let b = Nativeint_u.of_nativeint b in
-    let expect = if Nativeint_u.(a > b) then a else b in
-    let actual = I.Unboxed.select_nativeint Nativeint_u.(a > b) a b in
-    printf "%nd %nd\n" (Nativeint_u.to_nativeint expect) (Nativeint_u.to_nativeint actual));
-  [%expect
-    {|
-    1 1
-    5 5
-    9223372036854775807 9223372036854775807
-    |}]
-;;
+module%test [@tags "32-bits-only", "js-only"] Arch32 = struct
+  let%expect_test "csel max nativeint unboxed" =
+    let inputs = [ 0n, 1n; 4n, 5n; Nativeint.max_value, Nativeint.min_value ] in
+    List.iter inputs ~f:(fun (a, b) ->
+      let expect = if Nativeint.(a > b) then a else b in
+      let actual = I.select_nativeint Nativeint.(a > b) a b in
+      printf "%nd %nd\n" expect actual);
+    [%expect
+      {|
+      1 1
+      5 5
+      2147483647 2147483647
+      |}]
+  ;;
 
-[%%else]
-
-let%expect_test "csel max nativeint unboxed" =
-  let inputs = [ 0n, 1n; 4n, 5n; Nativeint.max_value, Nativeint.min_value ] in
-  List.iter inputs ~f:(fun (a, b) ->
-    let expect = if Nativeint.(a > b) then a else b in
-    let actual = I.select_nativeint Nativeint.(a > b) a b in
-    printf "%nd %nd\n" expect actual);
-  [%expect
-    {|
-    1 1
-    5 5
-    2147483647 2147483647
-    |}]
-;;
-
-let%expect_test "csel max nativeint#" =
-  let inputs = [ 0n, 1n; 4n, 5n; Nativeint.max_value, Nativeint.min_value ] in
-  List.iter inputs ~f:(fun (a, b) ->
-    let a = Nativeint_u.of_nativeint a in
-    let b = Nativeint_u.of_nativeint b in
-    let expect = if Nativeint_u.(a > b) then a else b in
-    let actual = I.Unboxed.select_nativeint Nativeint_u.(a > b) a b in
-    printf "%nd %nd\n" (Nativeint_u.to_nativeint expect) (Nativeint_u.to_nativeint actual));
-  [%expect
-    {|
-    1 1
-    5 5
-    2147483647 2147483647
-    |}]
-;;
-
-[%%endif]
+  let%expect_test "csel max nativeint#" =
+    let inputs = [ 0n, 1n; 4n, 5n; Nativeint.max_value, Nativeint.min_value ] in
+    List.iter inputs ~f:(fun (a, b) ->
+      let a = Nativeint_u.of_nativeint a in
+      let b = Nativeint_u.of_nativeint b in
+      let expect = if Nativeint_u.(a > b) then a else b in
+      let actual = I.Unboxed.select_nativeint Nativeint_u.(a > b) a b in
+      printf
+        "%nd %nd\n"
+        (Nativeint_u.to_nativeint expect)
+        (Nativeint_u.to_nativeint actual));
+    [%expect
+      {|
+      1 1
+      5 5
+      2147483647 2147483647
+      |}]
+  ;;
+end
 
 let%expect_test "csel sideffects" =
   let inputs = [ 0, 1; 5, 4 ] in
