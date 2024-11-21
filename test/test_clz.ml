@@ -1,5 +1,3 @@
-[%%import "config.h"]
-
 open Base
 open Stdio
 module I = Ocaml_intrinsics_kernel
@@ -58,138 +56,136 @@ let%expect_test "clz int32" =
     |}]
 ;;
 
-[%%ifdef JSC_ARCH_SIXTYFOUR]
+module%test [@tags "64-bits-only"] Arch64 = struct
+  let%expect_test "clz int" =
+    let open Int in
+    let numbers =
+      [ 0 (* Int.num_bits *)
+      ; 1 (* Int.num_bits - 1 *)
+      ; 7 (* Int.num_bits - 3  *)
+      ; max_value
+      ; min_value
+      ; -1
+      ]
+    in
+    let f =
+      test ~op:I.Int.count_leading_zeros ~op_name:"clz" ~to_string:Hex.to_string_hum
+    in
+    List.iter ~f numbers;
+    [%expect
+      {|
+      clz 0x0 = 63
+      clz 0x1 = 62
+      clz 0x7 = 60
+      clz 0x3fff_ffff_ffff_ffff = 1
+      clz -0x4000_0000_0000_0000 = 0
+      clz -0x1 = 0
+      |}];
+    let f =
+      test ~op:I.Int.count_leading_zeros2 ~op_name:"clz2" ~to_string:Hex.to_string_hum
+    in
+    List.iter ~f numbers;
+    [%expect
+      {|
+      clz2 0x0 = 63
+      clz2 0x1 = 62
+      clz2 0x7 = 60
+      clz2 0x3fff_ffff_ffff_ffff = 1
+      clz2 -0x4000_0000_0000_0000 = 0
+      clz2 -0x1 = 0
+      |}]
+  ;;
 
-let%expect_test "clz int" =
-  let open Int in
-  let numbers =
-    [ 0 (* Int.num_bits *)
-    ; 1 (* Int.num_bits - 1 *)
-    ; 7 (* Int.num_bits - 3  *)
-    ; max_value
-    ; min_value
-    ; -1
-    ]
-  in
-  let f =
-    test ~op:I.Int.count_leading_zeros ~op_name:"clz" ~to_string:Hex.to_string_hum
-  in
-  List.iter ~f numbers;
-  [%expect
-    {|
-    clz 0x0 = 63
-    clz 0x1 = 62
-    clz 0x7 = 60
-    clz 0x3fff_ffff_ffff_ffff = 1
-    clz -0x4000_0000_0000_0000 = 0
-    clz -0x1 = 0
-    |}];
-  let f =
-    test ~op:I.Int.count_leading_zeros2 ~op_name:"clz2" ~to_string:Hex.to_string_hum
-  in
-  List.iter ~f numbers;
-  [%expect
-    {|
-    clz2 0x0 = 63
-    clz2 0x1 = 62
-    clz2 0x7 = 60
-    clz2 0x3fff_ffff_ffff_ffff = 1
-    clz2 -0x4000_0000_0000_0000 = 0
-    clz2 -0x1 = 0
-    |}]
-;;
+  let%expect_test "clz nativeint" =
+    let open Nativeint in
+    let numbers =
+      [ 0n (* Int.num_bits *)
+      ; 1n (* Int.num_bits - 1 *)
+      ; 7n (* Int.num_bits - 3  *)
+      ; max_value
+      ; min_value
+      ; -1n
+      ]
+    in
+    let f =
+      test ~op:I.Nativeint.count_leading_zeros ~op_name:"clz" ~to_string:Hex.to_string_hum
+    in
+    List.iter ~f numbers;
+    [%expect
+      {|
+      clz 0x0 = 64
+      clz 0x1 = 63
+      clz 0x7 = 61
+      clz 0x7fff_ffff_ffff_ffff = 1
+      clz -0x8000_0000_0000_0000 = 0
+      clz -0x1 = 0
+      |}]
+  ;;
+end
 
-let%expect_test "clz nativeint" =
-  let open Nativeint in
-  let numbers =
-    [ 0n (* Int.num_bits *)
-    ; 1n (* Int.num_bits - 1 *)
-    ; 7n (* Int.num_bits - 3  *)
-    ; max_value
-    ; min_value
-    ; -1n
-    ]
-  in
-  let f =
-    test ~op:I.Nativeint.count_leading_zeros ~op_name:"clz" ~to_string:Hex.to_string_hum
-  in
-  List.iter ~f numbers;
-  [%expect
-    {|
-    clz 0x0 = 64
-    clz 0x1 = 63
-    clz 0x7 = 61
-    clz 0x7fff_ffff_ffff_ffff = 1
-    clz -0x8000_0000_0000_0000 = 0
-    clz -0x1 = 0
-    |}]
-;;
+module%test [@tags "32-bits-only", "js-only"] Arch32 = struct
+  let%expect_test "clz int" =
+    let open Int in
+    let numbers =
+      [ 0 (* Int.num_bits *)
+      ; 1 (* Int.num_bits - 1 *)
+      ; 7 (* Int.num_bits - 3  *)
+      ; max_value
+      ; min_value
+      ; -1
+      ]
+    in
+    let f =
+      test ~op:I.Int.count_leading_zeros ~op_name:"clz" ~to_string:Hex.to_string_hum
+    in
+    List.iter ~f numbers;
+    [%expect
+      {|
+      clz 0x0 = 31
+      clz 0x1 = 30
+      clz 0x7 = 28
+      clz 0x3fff_ffff = 1
+      clz -0x4000_0000 = 0
+      clz -0x1 = 0
+      |}];
+    let f =
+      test ~op:I.Int.count_leading_zeros2 ~op_name:"clz2" ~to_string:Hex.to_string_hum
+    in
+    List.iter ~f numbers;
+    [%expect
+      {|
+      clz2 0x0 = 31
+      clz2 0x1 = 30
+      clz2 0x7 = 28
+      clz2 0x3fff_ffff = 1
+      clz2 -0x4000_0000 = 0
+      clz2 -0x1 = 0
+      |}]
+  ;;
 
-[%%else]
-
-let%expect_test "clz int" =
-  let open Int in
-  let numbers =
-    [ 0 (* Int.num_bits *)
-    ; 1 (* Int.num_bits - 1 *)
-    ; 7 (* Int.num_bits - 3  *)
-    ; max_value
-    ; min_value
-    ; -1
-    ]
-  in
-  let f =
-    test ~op:I.Int.count_leading_zeros ~op_name:"clz" ~to_string:Hex.to_string_hum
-  in
-  List.iter ~f numbers;
-  [%expect
-    {|
-    clz 0x0 = 31
-    clz 0x1 = 30
-    clz 0x7 = 28
-    clz 0x3fff_ffff = 1
-    clz -0x4000_0000 = 0
-    clz -0x1 = 0
-    |}];
-  let f =
-    test ~op:I.Int.count_leading_zeros2 ~op_name:"clz2" ~to_string:Hex.to_string_hum
-  in
-  List.iter ~f numbers;
-  [%expect
-    {|
-    clz2 0x0 = 31
-    clz2 0x1 = 30
-    clz2 0x7 = 28
-    clz2 0x3fff_ffff = 1
-    clz2 -0x4000_0000 = 0
-    clz2 -0x1 = 0
-    |}]
-;;
-
-let%expect_test "clz nativeint" =
-  let open Nativeint in
-  let numbers =
-    [ 0n (* Int.num_bits *)
-    ; 1n (* Int.num_bits - 1 *)
-    ; 7n (* Int.num_bits - 3  *)
-    ; max_value
-    ; min_value
-    ; -1n
-    ]
-  in
-  let f =
-    test ~op:I.Nativeint.count_leading_zeros ~op_name:"clz" ~to_string:Hex.to_string_hum
-  in
-  List.iter ~f numbers;
-  [%expect
-    {|
-    clz 0x0 = 32
-    clz 0x1 = 31
-    clz 0x7 = 29
-    clz 0x7fff_ffff = 1
-    clz -0x8000_0000 = 0
-    clz -0x1 = 0
-    |}]
-;;
-
-[%%endif]
+  let%expect_test "clz nativeint" =
+    let open Nativeint in
+    let numbers =
+      [ 0n (* Int.num_bits *)
+      ; 1n (* Int.num_bits - 1 *)
+      ; 7n (* Int.num_bits - 3  *)
+      ; max_value
+      ; min_value
+      ; -1n
+      ]
+    in
+    let f =
+      test ~op:I.Nativeint.count_leading_zeros ~op_name:"clz" ~to_string:Hex.to_string_hum
+    in
+    List.iter ~f numbers;
+    [%expect
+      {|
+      clz 0x0 = 32
+      clz 0x1 = 31
+      clz 0x7 = 29
+      clz 0x7fff_ffff = 1
+      clz -0x8000_0000 = 0
+      clz -0x1 = 0
+      |}]
+  ;;
+end

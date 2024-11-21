@@ -4,6 +4,8 @@
  (flags :standard -extension layouts)
  (libraries int32_u int64_u nativeint_u ocaml_intrinsics_kernel
    ppx_bench.runtime-lib ppx_expect.runtime ppx_module_timer.runtime stdio)
+ (js_of_ocaml
+  (javascript_files test_stubs.js))
  (preprocess
   (pps ppx_jane ppx_optcomp)))
 
