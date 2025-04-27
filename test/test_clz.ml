@@ -1,8 +1,6 @@
 open Base
-open Stdio
+open Import
 module I = Ocaml_intrinsics_kernel
-
-let test ~op ~op_name ~to_string x = printf "%s %s = %d\n" op_name (to_string x) (op x)
 
 let%expect_test "clz int64" =
   let open Int64 in
@@ -16,7 +14,7 @@ let%expect_test "clz int64" =
     ]
   in
   let f =
-    test ~op:I.Int64.count_leading_zeros ~op_name:"clz" ~to_string:Hex.to_string_hum
+    test (module Int64.Hex) (module Int64) ~op:I.Int64.count_leading_zeros ~name:"clz"
   in
   List.iter ~f numbers;
   [%expect
@@ -42,7 +40,7 @@ let%expect_test "clz int32" =
     ]
   in
   let f =
-    test ~op:I.Int32.count_leading_zeros ~op_name:"clz" ~to_string:Hex.to_string_hum
+    test (module Int32.Hex) (module Int32) ~op:I.Int32.count_leading_zeros ~name:"clz"
   in
   List.iter ~f numbers;
   [%expect
@@ -69,7 +67,7 @@ module%test [@tags "64-bits-only"] Arch64 = struct
       ]
     in
     let f =
-      test ~op:I.Int.count_leading_zeros ~op_name:"clz" ~to_string:Hex.to_string_hum
+      test (module Int.Hex) (module Int) ~op:I.Int.count_leading_zeros ~name:"clz"
     in
     List.iter ~f numbers;
     [%expect
@@ -82,7 +80,7 @@ module%test [@tags "64-bits-only"] Arch64 = struct
       clz -0x1 = 0
       |}];
     let f =
-      test ~op:I.Int.count_leading_zeros2 ~op_name:"clz2" ~to_string:Hex.to_string_hum
+      test (module Int.Hex) (module Int) ~op:I.Int.count_leading_zeros2 ~name:"clz2"
     in
     List.iter ~f numbers;
     [%expect
@@ -108,7 +106,11 @@ module%test [@tags "64-bits-only"] Arch64 = struct
       ]
     in
     let f =
-      test ~op:I.Nativeint.count_leading_zeros ~op_name:"clz" ~to_string:Hex.to_string_hum
+      test
+        (module Nativeint.Hex)
+        (module Nativeint)
+        ~op:I.Nativeint.count_leading_zeros
+        ~name:"clz"
     in
     List.iter ~f numbers;
     [%expect
@@ -136,7 +138,7 @@ module%test [@tags "32-bits-only", "js-only"] Arch32 = struct
       ]
     in
     let f =
-      test ~op:I.Int.count_leading_zeros ~op_name:"clz" ~to_string:Hex.to_string_hum
+      test (module Int.Hex) (module Int) ~op:I.Int.count_leading_zeros ~name:"clz"
     in
     List.iter ~f numbers;
     [%expect
@@ -149,7 +151,7 @@ module%test [@tags "32-bits-only", "js-only"] Arch32 = struct
       clz -0x1 = 0
       |}];
     let f =
-      test ~op:I.Int.count_leading_zeros2 ~op_name:"clz2" ~to_string:Hex.to_string_hum
+      test (module Int.Hex) (module Int) ~op:I.Int.count_leading_zeros2 ~name:"clz2"
     in
     List.iter ~f numbers;
     [%expect
@@ -175,7 +177,11 @@ module%test [@tags "32-bits-only", "js-only"] Arch32 = struct
       ]
     in
     let f =
-      test ~op:I.Nativeint.count_leading_zeros ~op_name:"clz" ~to_string:Hex.to_string_hum
+      test
+        (module Nativeint.Hex)
+        (module Nativeint)
+        ~op:I.Nativeint.count_leading_zeros
+        ~name:"clz"
     in
     List.iter ~f numbers;
     [%expect

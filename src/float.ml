@@ -2,28 +2,32 @@ external min
   :  (float[@unboxed])
   -> (float[@unboxed])
   -> (float[@unboxed])
+  @@ portable
   = "caml_sse2_float64_min_bytecode" "caml_sse2_float64_min"
-[@@noalloc]  [@@no_effects] [@@no_coeffects]
+[@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
 external max
   :  (float[@unboxed])
   -> (float[@unboxed])
   -> (float[@unboxed])
+  @@ portable
   = "caml_sse2_float64_max_bytecode" "caml_sse2_float64_max"
-[@@noalloc]  [@@no_effects] [@@no_coeffects]
+[@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
 module Unboxed = struct
   external min
     :  (float#[@unboxed])
     -> (float#[@unboxed])
     -> (float#[@unboxed])
+    @@ portable
     = "caml_sse2_float64_min_bytecode" "caml_sse2_float64_min"
-  [@@noalloc]  [@@no_effects] [@@no_coeffects]
+  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
   external max
     :  (float#[@unboxed])
     -> (float#[@unboxed])
     -> (float#[@unboxed])
+    @@ portable
     = "caml_sse2_float64_max_bytecode" "caml_sse2_float64_max"
-  [@@noalloc]  [@@no_effects] [@@no_coeffects]
+  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 end

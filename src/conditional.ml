@@ -1,12 +1,12 @@
-(** [select_value c a b] is equivalent to [if c then a else b)]
-    where [a] and [b] are eagerly evaluated, regardless of the value of [c].
-    Compiles to CMOV instruction on amd64 targets.
-    Can be used to avoid branch misprediction when [c] is data dependent. *)
+(** [select_value c a b] is equivalent to [if c then a else b)] where [a] and [b] are
+    eagerly evaluated, regardless of the value of [c]. Compiles to CMOV instruction on
+    amd64 targets. Can be used to avoid branch misprediction when [c] is data dependent. *)
 external select_value
   :  bool
   -> ('a[@local_opt])
   -> ('a[@local_opt])
   -> ('a[@local_opt])
+  @@ portable
   = "caml_csel_value"
 [@@noalloc] [@@no_effects] [@@no_coeffects] [@@builtin]
 
@@ -15,6 +15,7 @@ external select_int
   -> (int[@untagged])
   -> (int[@untagged])
   -> (int[@untagged])
+  @@ portable
   = "caml_csel_value" "caml_csel_int_untagged"
 [@@noalloc] [@@no_effects] [@@no_coeffects] [@@builtin]
 
@@ -23,6 +24,7 @@ external select_int64
   -> (int64[@unboxed])
   -> (int64[@unboxed])
   -> (int64[@unboxed])
+  @@ portable
   = "caml_csel_value" "caml_csel_int64_unboxed"
 [@@noalloc] [@@no_effects] [@@no_coeffects] [@@builtin]
 
@@ -31,6 +33,7 @@ external select_int32
   -> (int32[@unboxed])
   -> (int32[@unboxed])
   -> (int32[@unboxed])
+  @@ portable
   = "caml_csel_value" "caml_csel_int32_unboxed"
 [@@noalloc] [@@no_effects] [@@no_coeffects] [@@builtin]
 
@@ -39,6 +42,7 @@ external select_nativeint
   -> (nativeint[@unboxed])
   -> (nativeint[@unboxed])
   -> (nativeint[@unboxed])
+  @@ portable
   = "caml_csel_value" "caml_csel_nativeint_unboxed"
 [@@noalloc] [@@no_effects] [@@no_coeffects] [@@builtin]
 
@@ -48,6 +52,7 @@ module Unboxed = struct
     -> (int64#[@unboxed])
     -> (int64#[@unboxed])
     -> (int64#[@unboxed])
+    @@ portable
     = "caml_csel_value" "caml_csel_int64_unboxed"
   [@@noalloc] [@@no_effects] [@@no_coeffects] [@@builtin]
 
@@ -56,6 +61,7 @@ module Unboxed = struct
     -> (int32#[@unboxed])
     -> (int32#[@unboxed])
     -> (int32#[@unboxed])
+    @@ portable
     = "caml_csel_value" "caml_csel_int32_unboxed"
   [@@noalloc] [@@no_effects] [@@no_coeffects] [@@builtin]
 
@@ -64,6 +70,7 @@ module Unboxed = struct
     -> (nativeint#[@unboxed])
     -> (nativeint#[@unboxed])
     -> (nativeint#[@unboxed])
+    @@ portable
     = "caml_csel_value" "caml_csel_nativeint_unboxed"
   [@@noalloc] [@@no_effects] [@@no_coeffects] [@@builtin]
 end

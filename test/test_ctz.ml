@@ -1,15 +1,14 @@
 open Base
-open Stdio
+open Import
 module I = Ocaml_intrinsics_kernel
 
-let test ~op ~op_name ~to_string x = printf "%s %s = %d\n" op_name (to_string x) (op x)
 let numbers = [ 0 (* Int.num_bits *); 1; 7; 2; 4; 12; 18; -1 ]
 
 let%expect_test "ctz int64" =
   let open Int64 in
   let numbers = List.map numbers ~f:of_int in
   let f =
-    test ~op:I.Int64.count_trailing_zeros ~op_name:"ctz" ~to_string:Hex.to_string_hum
+    test (module Int64.Hex) (module Int64) ~op:I.Int64.count_trailing_zeros ~name:"ctz"
   in
   List.iter ~f (max_value :: min_value :: numbers);
   [%expect
@@ -30,9 +29,7 @@ let%expect_test "ctz int64" =
 let%expect_test "ctz int32" =
   let open Int32 in
   let numbers = List.map numbers ~f:of_int_trunc in
-  let f =
-    test ~op:I.Int32.count_trailing_zeros ~op_name:"ctz" ~to_string:Hex.to_string_hum
-  in
+  let f = test ~op:I.Int32.count_trailing_zeros ~name:"ctz" (module Hex) (module Int32) in
   List.iter ~f (max_value :: min_value :: numbers);
   [%expect
     {|
@@ -53,7 +50,7 @@ module%test [@tags "64-bits-only"] Arch64 = struct
   let%expect_test "ctz int" =
     let open Int in
     let f =
-      test ~op:I.Int.count_trailing_zeros ~op_name:"ctz" ~to_string:Hex.to_string_hum
+      test (module Int.Hex) (module Int) ~op:I.Int.count_trailing_zeros ~name:"ctz"
     in
     List.iter ~f (max_value :: min_value :: numbers);
     [%expect
@@ -76,9 +73,10 @@ module%test [@tags "64-bits-only"] Arch64 = struct
     let numbers = List.map numbers ~f:of_int in
     let f =
       test
+        (module Nativeint.Hex)
+        (module Nativeint)
         ~op:I.Nativeint.count_trailing_zeros
-        ~op_name:"ctz"
-        ~to_string:Hex.to_string_hum
+        ~name:"ctz"
     in
     List.iter ~f (max_value :: min_value :: numbers);
     [%expect
@@ -101,7 +99,7 @@ module%test [@tags "32-bits-only", "js-only"] Arch32 = struct
   let%expect_test "ctz int" =
     let open Int in
     let f =
-      test ~op:I.Int.count_trailing_zeros ~op_name:"ctz" ~to_string:Hex.to_string_hum
+      test (module Int.Hex) (module Int) ~op:I.Int.count_trailing_zeros ~name:"ctz"
     in
     List.iter ~f (max_value :: min_value :: numbers);
     [%expect
@@ -124,9 +122,10 @@ module%test [@tags "32-bits-only", "js-only"] Arch32 = struct
     let numbers = List.map numbers ~f:of_int in
     let f =
       test
+        (module Nativeint.Hex)
+        (module Nativeint)
         ~op:I.Nativeint.count_trailing_zeros
-        ~op_name:"ctz"
-        ~to_string:Hex.to_string_hum
+        ~name:"ctz"
     in
     List.iter ~f (max_value :: min_value :: numbers);
     [%expect

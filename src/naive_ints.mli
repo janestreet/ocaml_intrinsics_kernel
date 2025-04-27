@@ -1,20 +1,32 @@
-module type Intlike = sig
-  type t
+@@ portable
 
-  val logand : t -> t -> t
+module type Intlike = sig @@ portable
+  type t : immutable_data
+
+  val logand : local_ t -> local_ t -> local_ t
   val zero : t
   val one : t
-  val equal : t -> t -> bool
-  val compare : t -> t -> int
-  val shift_right_logical : t -> int -> t
-  val shift_left : t -> int -> t
-  val bitwidth : int
+  val equal : local_ t -> local_ t -> bool
+  val compare : local_ t -> local_ t -> int
+  val shift_right : local_ t -> int -> local_ t
+  val shift_right_logical : local_ t -> int -> local_ t
+  val shift_left : local_ t -> int -> local_ t
+  val bitwidth : t
+  val to_int : local_ t -> int
+  val of_int : int -> t
 end
 
-module Make (I : Intlike) : sig
+module type S = sig @@ portable
+  type t : immutable_data
+
   (** See documentation of [Int]. *)
-  val count_leading_zeros : I.t -> int
+  val count_leading_zeros : local_ t -> t
 
-  val count_set_bits : I.t -> int
-  val count_trailing_zeros : I.t -> int
+  val count_set_bits : local_ t -> t
+  val count_trailing_zeros : local_ t -> t
+  val shift_left : local_ t -> local_ t -> local_ t
+  val shift_right : local_ t -> local_ t -> local_ t
+  val shift_right_logical : local_ t -> local_ t -> local_ t
 end
+
+module Make (I : Intlike) : S with type t = I.t

@@ -1,15 +1,11 @@
 open Base
-open Stdio
+open Import
 module I = Ocaml_intrinsics_kernel
-
-let test ~op ~op_name ~to_string x = printf "%s %s = %d\n" op_name (to_string x) (op x)
 
 let%expect_test "popcnt int64" =
   let open Int64 in
   let numbers = [ 0L; 1L; 7L; max_value; min_value; -1L ] in
-  let f =
-    test ~op:I.Int64.count_set_bits ~op_name:"popcnt" ~to_string:Hex.to_string_hum
-  in
+  let f = test ~op:I.Int64.count_set_bits ~name:"popcnt" (module Hex) (module Int64) in
   List.iter ~f numbers;
   [%expect
     {|
@@ -25,9 +21,7 @@ let%expect_test "popcnt int64" =
 let%expect_test "popcnt int32" =
   let open Int32 in
   let numbers = [ 0l; 1l; 7l; max_value; min_value; -1l ] in
-  let f =
-    test ~op:I.Int32.count_set_bits ~op_name:"popcnt" ~to_string:Hex.to_string_hum
-  in
+  let f = test ~op:I.Int32.count_set_bits ~name:"popcnt" (module Hex) (module Int32) in
   List.iter ~f numbers;
   [%expect
     {|
@@ -52,9 +46,7 @@ module%test [@tags "64-bits-only"] Arch64 = struct
       ; -1 (* Int.num_bits *)
       ]
     in
-    let f =
-      test ~op:I.Int.count_set_bits ~op_name:"popcnt" ~to_string:Hex.to_string_hum
-    in
+    let f = test (module Hex) (module Int) ~op:I.Int.count_set_bits ~name:"popcnt" in
     List.iter ~f numbers;
     [%expect
       {|
@@ -65,9 +57,7 @@ module%test [@tags "64-bits-only"] Arch64 = struct
       popcnt -0x4000_0000_0000_0000 = 1
       popcnt -0x1 = 63
       |}];
-    let f =
-      test ~op:I.Int.count_set_bits2 ~op_name:"popcnt2" ~to_string:Hex.to_string_hum
-    in
+    let f = test (module Hex) (module Int) ~op:I.Int.count_set_bits2 ~name:"popcnt2" in
     List.iter ~f numbers;
     [%expect
       {|
@@ -84,7 +74,7 @@ module%test [@tags "64-bits-only"] Arch64 = struct
     let open Nativeint in
     let numbers = [ 0n; 1n; 7n; max_value; min_value; -1n ] in
     let f =
-      test ~op:I.Nativeint.count_set_bits ~op_name:"popcnt" ~to_string:Hex.to_string_hum
+      test (module Hex) (module Nativeint) ~op:I.Nativeint.count_set_bits ~name:"popcnt"
     in
     List.iter ~f numbers;
     [%expect
@@ -111,9 +101,7 @@ module%test [@tags "32-bits-only", "js-only"] Arch32 = struct
       ; -1 (* Int.num_bits *)
       ]
     in
-    let f =
-      test ~op:I.Int.count_set_bits ~op_name:"popcnt" ~to_string:Hex.to_string_hum
-    in
+    let f = test (module Hex) (module Int) ~op:I.Int.count_set_bits ~name:"popcnt" in
     List.iter ~f numbers;
     [%expect
       {|
@@ -124,9 +112,7 @@ module%test [@tags "32-bits-only", "js-only"] Arch32 = struct
       popcnt -0x4000_0000 = 1
       popcnt -0x1 = 31
       |}];
-    let f =
-      test ~op:I.Int.count_set_bits2 ~op_name:"popcnt2" ~to_string:Hex.to_string_hum
-    in
+    let f = test (module Hex) (module Int) ~op:I.Int.count_set_bits2 ~name:"popcnt2" in
     List.iter ~f numbers;
     [%expect
       {|
@@ -143,7 +129,7 @@ module%test [@tags "32-bits-only", "js-only"] Arch32 = struct
     let open Nativeint in
     let numbers = [ 0n; 1n; 7n; max_value; min_value; -1n ] in
     let f =
-      test ~op:I.Nativeint.count_set_bits ~op_name:"popcnt" ~to_string:Hex.to_string_hum
+      test (module Hex) (module Nativeint) ~op:I.Nativeint.count_set_bits ~name:"popcnt"
     in
     List.iter ~f numbers;
     [%expect
