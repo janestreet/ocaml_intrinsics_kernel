@@ -19,7 +19,7 @@
 #define int64_popcnt __builtin_popcountll
 #else /* defined(__GNUC__) */
 #ifdef _MSC_VER
-#warning "Functionality on Windows has not been tested"
+#pragma message("Functionality on Windows has not been tested")
 #include <intrin.h>
 #pragma intrinsic(_BitScanReverse)
 
@@ -82,7 +82,7 @@ intnat naive_int64_ctz(uint64_t v)
 intnat naive_int32_ctz(uint32_t v)
 {
   unsigned long n;
-  if (_BitScanForward(&n, v)) return n
+  if (_BitScanForward(&n, v)) return n;
   else return 32;
 }
 
