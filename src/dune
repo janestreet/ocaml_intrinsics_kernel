@@ -8,4 +8,7 @@
  (ocamlopt_flags :standard -O3)
  (js_of_ocaml
   (javascript_files runtime.js))
- (preprocess no_preprocessing))
+ (preprocess no_preprocessing)
+ (wasm_of_ocaml
+  (javascript_files runtime.js)
+  (wasm_files runtime.wat)))

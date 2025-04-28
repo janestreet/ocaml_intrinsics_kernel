@@ -7,7 +7,10 @@
  (js_of_ocaml
   (javascript_files test_stubs.js))
  (preprocess
-  (pps ppx_jane ppx_optcomp)))
+  (pps ppx_jane ppx_optcomp))
+ (wasm_of_ocaml
+  (javascript_files test_stubs.js)
+  (wasm_files test_stubs.wat)))
 
 (rule
  (targets config.h)

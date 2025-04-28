@@ -283,17 +283,53 @@ intnat caml_int32_popcnt_unboxed_to_untagged(int32_t v)
 
 CAMLprim value caml_int32_clz(value v1)
 {
-  return Val_long(caml_int32_clz_unboxed_to_untagged(Int32_val(v1)));
+  return caml_copy_int32(caml_int32_clz_unboxed_to_untagged(Int32_val(v1)));
 }
 
 CAMLprim value caml_int32_ctz(value v1)
 {
-  return Val_long(caml_int32_ctz_unboxed_to_untagged(Int32_val(v1)));
+  return caml_copy_int32(caml_int32_ctz_unboxed_to_untagged(Int32_val(v1)));
 }
 
 CAMLprim value caml_int32_popcnt(value v1)
 {
-  return Val_long(caml_int32_popcnt_unboxed_to_untagged(Int32_val(v1)));
+  return caml_copy_int32(caml_int32_popcnt_unboxed_to_untagged(Int32_val(v1)));
+}
+
+int32_t caml_int32_shift_left_by_int32_unboxed(int32_t v1, int32_t v2)
+{
+  return v1 << v2;
+}
+
+int32_t caml_int32_shift_right_by_int32_unboxed(int32_t v1, int32_t v2)
+{
+  return v1 >> v2;
+}
+
+int32_t caml_int32_shift_right_logical_by_int32_unboxed(int32_t v1, int32_t v2)
+{
+  return ((uint32_t) v1 >> v2);
+}
+
+CAMLprim value caml_int32_shift_left_by_int32(value v1, value v2)
+{
+  int32_t res = caml_int32_shift_left_by_int32_unboxed(Int32_val(v1),
+                                                     Int32_val(v2));
+  return caml_copy_int32(res);
+}
+
+CAMLprim value caml_int32_shift_right_by_int32(value v1, value v2)
+{
+  int32_t res = caml_int32_shift_right_by_int32_unboxed(Int32_val(v1),
+                                                        Int32_val(v2));
+  return caml_copy_int32(res);
+}
+
+CAMLprim value caml_int32_shift_right_logical_by_int32(value v1, value v2)
+{
+  int32_t res = caml_int32_shift_right_logical_by_int32_unboxed(Int32_val(v1),
+                                                                Int32_val(v2));
+  return caml_copy_int32(res);
 }
 
 intnat caml_int64_clz_unboxed_to_untagged(int64_t v)
@@ -323,17 +359,53 @@ intnat caml_int64_popcnt_unboxed_to_untagged(int64_t v)
 
 CAMLprim value caml_int64_clz(value v1)
 {
-  return Val_long(caml_int64_clz_unboxed_to_untagged(Int64_val(v1)));
+  return caml_copy_int64(caml_int64_clz_unboxed_to_untagged(Int64_val(v1)));
 }
 
 CAMLprim value caml_int64_ctz(value v1)
 {
-  return Val_long(caml_int64_ctz_unboxed_to_untagged(Int64_val(v1)));
+  return caml_copy_int64(caml_int64_ctz_unboxed_to_untagged(Int64_val(v1)));
 }
 
 CAMLprim value caml_int64_popcnt(value v1)
 {
-  return Val_long(int64_popcnt(Int64_val(v1)));
+  return caml_copy_int64(int64_popcnt(Int64_val(v1)));
+}
+
+int64_t caml_int64_shift_left_by_int64_unboxed(int64_t v1, int64_t v2)
+{
+  return v1 << v2;
+}
+
+int64_t caml_int64_shift_right_by_int64_unboxed(int64_t v1, int64_t v2)
+{
+  return v1 >> v2;
+}
+
+int64_t caml_int64_shift_right_logical_by_int64_unboxed(int64_t v1, int64_t v2)
+{
+  return ((uint64_t) v1 >> v2);
+}
+
+CAMLprim value caml_int64_shift_left_by_int64(value v1, value v2)
+{
+  int64_t res = caml_int64_shift_left_by_int64_unboxed(Int64_val(v1),
+                                                     Int64_val(v2));
+  return caml_copy_int64(res);
+}
+
+CAMLprim value caml_int64_shift_right_by_int64(value v1, value v2)
+{
+  int64_t res = caml_int64_shift_right_by_int64_unboxed(Int64_val(v1),
+                                                        Int64_val(v2));
+  return caml_copy_int64(res);
+}
+
+CAMLprim value caml_int64_shift_right_logical_by_int64(value v1, value v2)
+{
+  int64_t res = caml_int64_shift_right_logical_by_int64_unboxed(Int64_val(v1),
+                                                                Int64_val(v2));
+  return caml_copy_int64(res);
 }
 
 int caml_nativeint_clz_unboxed_to_untagged(intnat v)
@@ -383,15 +455,51 @@ intnat caml_nativeint_popcnt_unboxed_to_untagged(intnat v)
 
 CAMLprim value caml_nativeint_clz(value v1)
 {
-  return Val_long(caml_nativeint_clz_unboxed_to_untagged(Int64_val(v1)));
+  return caml_copy_nativeint(caml_nativeint_clz_unboxed_to_untagged(Nativeint_val(v1)));
 }
 
 CAMLprim value caml_nativeint_ctz(value v1)
 {
-  return Val_long(caml_nativeint_ctz_unboxed_to_untagged(Int64_val(v1)));
+  return caml_copy_nativeint(caml_nativeint_ctz_unboxed_to_untagged(Nativeint_val(v1)));
 }
 
 CAMLprim value caml_nativeint_popcnt(value v1)
 {
-  return Val_long(caml_nativeint_popcnt_unboxed_to_untagged(Int64_val(v1)));
+  return caml_copy_nativeint(caml_nativeint_popcnt_unboxed_to_untagged(Nativeint_val(v1)));
+}
+
+intnat caml_nativeint_shift_left_by_nativeint_unboxed(intnat v1, intnat v2)
+{
+  return v1 << v2;
+}
+
+intnat caml_nativeint_shift_right_by_nativeint_unboxed(intnat v1, intnat v2)
+{
+  return v1 >> v2;
+}
+
+intnat caml_nativeint_shift_right_logical_by_nativeint_unboxed(intnat v1, intnat v2)
+{
+  return ((uintnat) v1 >> v2);
+}
+
+CAMLprim value caml_nativeint_shift_left_by_nativeint(value v1, value v2)
+{
+  intnat res = caml_nativeint_shift_left_by_nativeint_unboxed(Nativeint_val(v1),
+                                                     Nativeint_val(v2));
+  return caml_copy_nativeint(res);
+}
+
+CAMLprim value caml_nativeint_shift_right_by_nativeint(value v1, value v2)
+{
+  intnat res = caml_nativeint_shift_right_by_nativeint_unboxed(Nativeint_val(v1),
+                                                        Nativeint_val(v2));
+  return caml_copy_nativeint(res);
+}
+
+CAMLprim value caml_nativeint_shift_right_logical_by_nativeint(value v1, value v2)
+{
+  intnat res = caml_nativeint_shift_right_logical_by_nativeint_unboxed(Nativeint_val(v1),
+                                                                Nativeint_val(v2));
+  return caml_copy_nativeint(res);
 }

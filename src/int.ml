@@ -1,17 +1,15 @@
 (** The are two version of [count_leading_zeros], [count_set_bits] each, which differ in
-    their native code implementation.  The first version takes as input a tagged integer
-    and the second version takes as input an untagged integer.  Generally, the first
+    their native code implementation. The first version takes as input a tagged integer
+    and the second version takes as input an untagged integer. Generally, the first
     version (that operates on a tagged integer) is faster, but if the integer is already
-    untagged, it may be faster to use the second version.
-*)
+    untagged, it may be faster to use the second version. *)
 
 module Stubs = struct
   let available = Common.available
 
-  (** [count_leading_zeros n] returns the number of most-significant
-      zero bits before the most significant set bit in [n].
-      If [n] is 0, the result is the number of bits in [n],
-      that is 31 or 63, depending on the target. *)
+  (** [count_leading_zeros n] returns the number of most-significant zero bits before the
+      most significant set bit in [n]. If [n] is 0, the result is the number of bits in
+      [n], that is 31 or 63, depending on the target. *)
   external count_leading_zeros
     :  int
     -> (int[@untagged])
@@ -37,10 +35,9 @@ module Stubs = struct
     = "caml_int_popcnt" "caml_int_popcnt_untagged_to_untagged"
   [@@untagged] [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
-  (** [count_trailing_zeros n] returns the number of least-significant
-      zero bits before the least significant set bit in [n].
-      If [n] is 0, the result is the number of bits in [n],
-      that is 31 or 63, depending on the target. *)
+  (** [count_trailing_zeros n] returns the number of least-significant zero bits before
+      the least significant set bit in [n]. If [n] is 0, the result is the number of bits
+      in [n], that is 31 or 63, depending on the target. *)
   external count_trailing_zeros
     :  int
     -> int
@@ -51,7 +48,12 @@ end
 module Naive = Naive_ints.Make (struct
     include Stdlib.Int
 
+    external compare : t -> t -> int = "%compare"
+    external equal : t -> t -> bool = "%equal"
+
     let bitwidth = Sys.int_size
+    let to_int = Fun.id
+    let of_int t = t
   end)
 
 let[@inline always] count_leading_zeros n =

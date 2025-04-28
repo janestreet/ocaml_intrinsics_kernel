@@ -1,7 +1,6 @@
-(** [select_value c a b] is equivalent to [if c then a else b)]
-    where [a] and [b] are eagerly evaluated, regardless of the value of [c].
-    Compiles to CMOV instruction on amd64 targets.
-    Can be used to avoid branch misprediction when [c] is data dependent. *)
+(** [select_value c a b] is equivalent to [if c then a else b)] where [a] and [b] are
+    eagerly evaluated, regardless of the value of [c]. Compiles to CMOV instruction on
+    amd64 targets. Can be used to avoid branch misprediction when [c] is data dependent. *)
 external select_value
   :  bool
   -> ('a[@local_opt])

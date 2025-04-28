@@ -6,10 +6,11 @@
 
    So we have to be VERY careful how we use these!
 *)
+
 (** Equivalent to [if x < y then x else y].
 
-    On an x86-64 machine, this compiles to [minsd xmm0, xmm1].
-    On ARM, this calls a C implementation. *)
+    On an x86-64 machine, this compiles to [minsd xmm0, xmm1]. On ARM, this calls a C
+    implementation. *)
 external min
   :  (float[@unboxed])
   -> (float[@unboxed])
@@ -19,8 +20,8 @@ external min
 
 (** Equivalent to [if x > y then x else y].
 
-    On an x86-64 machine, this compiles to [maxsd xmm0, xmm1].
-    On ARM, this calls a C implementation. *)
+    On an x86-64 machine, this compiles to [maxsd xmm0, xmm1]. On ARM, this calls a C
+    implementation. *)
 external max
   :  (float[@unboxed])
   -> (float[@unboxed])
