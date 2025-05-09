@@ -40,7 +40,7 @@ let test_shifts
   let local_ expected = expected_op x y in
   let local_ res = op x y in
   print_endline [%string "%{x#Input} %{name} by %{y#Shift} ="];
-  print_endline [%string "%{res#Input}"];
+  print_endline [%string.global "%{res#Input}"];
   if Stdlib.compare res expected <> 0
   then print_endline [%string "%{expected#Input} expected"]
 ;;
