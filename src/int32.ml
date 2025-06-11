@@ -45,7 +45,7 @@ module Stubs = struct
     -> (int32[@unboxed])
     @@ portable
     = "caml_int32_popcnt" "caml_int32_popcnt_unboxed_to_untagged"
-  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
+  [@@noalloc] (* [@@builtin] *) [@@no_effects] [@@no_coeffects]
 
   external shift_left
     :  (int32[@local_opt])

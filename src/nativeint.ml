@@ -45,7 +45,7 @@ module Stubs = struct
     -> (nativeint[@unboxed])
     @@ portable
     = "caml_nativeint_popcnt" "caml_nativeint_popcnt_unboxed_to_untagged"
-  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
+  [@@noalloc] (* [@@builtin] *) [@@no_effects] [@@no_coeffects]
 
   external shift_left
     :  (nativeint[@local_opt])

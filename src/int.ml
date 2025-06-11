@@ -30,14 +30,14 @@ module Stubs = struct
     -> (int[@untagged])
     @@ portable
     = "caml_int_popcnt" "caml_int_popcnt_tagged_to_untagged"
-  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
+  [@@noalloc] (* [@@builtin] *) [@@no_effects] [@@no_coeffects]
 
   external count_set_bits2
     :  int
     -> int
     @@ portable
     = "caml_int_popcnt" "caml_int_popcnt_untagged_to_untagged"
-  [@@untagged] [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
+  [@@untagged] [@@noalloc] (* [@@builtin] *) [@@no_effects] [@@no_coeffects]
 
   (** [count_trailing_zeros n] returns the number of least-significant zero bits before
       the least significant set bit in [n]. If [n] is 0, the result is the number of bits
