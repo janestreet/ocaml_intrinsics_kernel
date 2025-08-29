@@ -1,11 +1,9 @@
-(* X86 docs say:
+(** X86 docs say:
 
-   If only one value is a NaN (SNaN or QNaN) for this instruction, the second source
-   operand, either a NaN or a valid floating-point value
-   is written to the result.
+    If only one value is a NaN (SNaN or QNaN) for this instruction, the second source
+    operand, either a NaN or a valid floating-point value is written to the result.
 
-   So we have to be VERY careful how we use these!
-*)
+    So we have to be VERY careful how we use these! *)
 
 (** Equivalent to [if x < y then x else y].
 
@@ -29,6 +27,21 @@ external max
   = "caml_sse2_float64_max_bytecode" "caml_sse2_float64_max"
 [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
+(** Rounds a [float] to an [int64] using the current rounding mode. In native code, the
+    default rounding mode is "round half to even," and we expect that no program will
+    change the rounding mode.
+
+    If the argument is NaN or infinite or if the rounded value cannot be represented, the
+    result is unspecified.
+
+    On an x86-64 machine, this compiles to [cvtsd2si rax, xmm0]. On ARM, this calls a C
+    implementation. *)
+external iround_current
+  :  (float[@unboxed])
+  -> (int64[@unboxed])
+  = "caml_sse2_cast_float64_int64_bytecode" "caml_sse2_cast_float64_int64"
+[@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
+
 module Unboxed : sig
   external min
     :  (float[@unboxed])
@@ -42,5 +55,11 @@ module Unboxed : sig
     -> (float[@unboxed])
     -> (float[@unboxed])
     = "caml_sse2_float64_max_bytecode" "caml_sse2_float64_max"
+  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
+
+  external iround_current
+    :  (float[@unboxed])
+    -> (int64[@unboxed])
+    = "caml_sse2_cast_float64_int64_bytecode" "caml_sse2_cast_float64_int64"
   [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 end

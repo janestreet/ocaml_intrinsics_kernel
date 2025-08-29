@@ -15,3 +15,9 @@ function caml_sse2_float64_min_bytecode(x, y) {
 function caml_sse2_float64_max_bytecode(x, y) {
   return x > y ? x : y;
 }
+
+//Requires: caml_int64_of_float
+//Provides: caml_sse2_cast_float64_int64_bytecode
+function caml_sse2_cast_float64_int64_bytecode(x) {
+  return caml_int64_of_float(Math.round(x));
+}
