@@ -2,10 +2,8 @@
     eagerly evaluated, regardless of the value of [c]. Compiles to CMOV instruction on
     amd64 targets. Can be used to avoid branch misprediction when [c] is data dependent. *)
 external select_value
-  :  bool
-  -> ('a[@local_opt])
-  -> ('a[@local_opt])
-  -> ('a[@local_opt])
+  : ('a : value_or_null).
+  bool -> ('a[@local_opt]) -> ('a[@local_opt]) -> ('a[@local_opt])
   @@ portable
   = "caml_csel_value"
 [@@noalloc] [@@no_effects] [@@no_coeffects] [@@builtin]

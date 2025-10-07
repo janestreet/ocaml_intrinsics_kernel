@@ -39,3 +39,41 @@ let%expect_test "min and max" =
     max 0 nan = nan
     |}]
 ;;
+
+let%expect_test "iround" =
+  let args =
+    [ 0.
+    ; -0.
+    ; 0.4
+    ; -0.4
+    ; 0.6
+    ; -0.6
+    ; Float.of_int64 (Float.to_int64_preserve_order_exn Float.infinity)
+    ; Float.of_int64 (Float.to_int64_preserve_order_exn Float.neg_infinity)
+    ]
+  in
+  List.iter args ~f:(fun x -> printf "iround %.19g = %Ld\n" x (I.iround_current x));
+  [%expect
+    {|
+    iround 0 = 0
+    iround -0 = 0
+    iround 0.4000000000000000222 = 0
+    iround -0.4000000000000000222 = 0
+    iround 0.5999999999999999778 = 1
+    iround -0.5999999999999999778 = -1
+    iround 9218868437227405312 = 9218868437227405312
+    iround -9218868437227405312 = -9218868437227405312
+    |}]
+;;
+
+let%expect_test ("iround half-to-even" [@tags "no-js"]) =
+  let args = [ 0.5; -0.5; 1.5; -1.5 ] in
+  List.iter args ~f:(fun x -> printf "iround %.19g = %Ld\n" x (I.iround_current x));
+  [%expect
+    {|
+    iround 0.5 = 0
+    iround -0.5 = 0
+    iround 1.5 = 2
+    iround -1.5 = -2
+    |}]
+;;
