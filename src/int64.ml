@@ -9,7 +9,7 @@ module Stubs = struct
     -> (int64[@unboxed])
     @@ portable
     = "caml_int64_clz" "caml_int64_clz_unboxed_to_untagged"
-  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
+  [@@noalloc] [@@no_effects] [@@no_coeffects]
 
   (** Same as [count_leading_zeros] except if the argument is zero, then the result is
       undefined. Emits more efficient code. *)
@@ -18,7 +18,7 @@ module Stubs = struct
     -> (int64[@unboxed])
     @@ portable
     = "caml_int64_clz" "caml_int64_clz_nonzero_unboxed_to_untagged"
-  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
+  [@@noalloc] [@@no_effects] [@@no_coeffects]
 
   (** [count_trailing_zeros n] returns the number of least-significant zero bits before
       the least significant set bit in [n]. If [n] is 0, the result is the number of bits
@@ -28,7 +28,7 @@ module Stubs = struct
     -> (int64[@unboxed])
     @@ portable
     = "caml_int64_ctz" "caml_int64_ctz_unboxed_to_untagged"
-  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
+  [@@noalloc] [@@no_effects] [@@no_coeffects]
 
   (** Same as [count_trailing_zeros] except if the argument is zero, then the result is
       undefined. Emits more efficient code. *)
@@ -37,7 +37,7 @@ module Stubs = struct
     -> (int64[@unboxed])
     @@ portable
     = "caml_int64_ctz" "caml_int64_ctz_nonzero_unboxed_to_untagged"
-  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
+  [@@noalloc] [@@no_effects] [@@no_coeffects]
 
   (** [count_set_bits n] returns the number of bits that are 1 in [n]. *)
   external count_set_bits
@@ -45,7 +45,7 @@ module Stubs = struct
     -> (int64[@unboxed])
     @@ portable
     = "caml_int64_popcnt" "caml_int64_popcnt_unboxed_to_untagged"
-  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
+  [@@noalloc] [@@no_effects] [@@no_coeffects]
 
   external shift_left
     :  (int64[@local_opt])
@@ -53,7 +53,7 @@ module Stubs = struct
     -> (int64[@local_opt])
     @@ portable
     = "caml_int64_shift_left_by_int64" "caml_int64_shift_left_by_int64_unboxed"
-  [@@noalloc] (* [@@builtin] *) [@@no_effects] [@@no_coeffects] [@@unboxed]
+  [@@noalloc] [@@no_effects] [@@no_coeffects] [@@unboxed]
 
   external shift_right
     :  (int64[@local_opt])
@@ -61,7 +61,7 @@ module Stubs = struct
     -> (int64[@local_opt])
     @@ portable
     = "caml_int64_shift_right_by_int64" "caml_int64_shift_right_by_int64_unboxed"
-  [@@noalloc] (* [@@builtin] *) [@@no_effects] [@@no_coeffects] [@@unboxed]
+  [@@noalloc] [@@no_effects] [@@no_coeffects] [@@unboxed]
 
   external shift_right_logical
     :  (int64[@local_opt])
@@ -70,7 +70,7 @@ module Stubs = struct
     @@ portable
     = "caml_int64_shift_right_logical_by_int64"
       "caml_int64_shift_right_logical_by_int64_unboxed"
-  [@@noalloc] (* [@@builtin] *) [@@no_effects] [@@no_coeffects] [@@unboxed]
+  [@@noalloc] [@@no_effects] [@@no_coeffects] [@@unboxed]
 end
 
 module Naive = Naive_ints.Make (struct

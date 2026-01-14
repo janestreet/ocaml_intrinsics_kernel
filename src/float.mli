@@ -16,7 +16,7 @@ external min
   -> (float[@unboxed])
   -> (float[@unboxed])
   = "caml_sse2_float64_min_bytecode" "caml_sse2_float64_min"
-[@@noalloc]
+[@@noalloc] [@@no_effects] [@@no_coeffects]
 
 (** Equivalent to [if x > y then x else y].
 
@@ -27,7 +27,7 @@ external max
   -> (float[@unboxed])
   -> (float[@unboxed])
   = "caml_sse2_float64_max_bytecode" "caml_sse2_float64_max"
-[@@noalloc]
+[@@noalloc] [@@no_effects] [@@no_coeffects]
 
 (** Rounds a [float] to an [int64] using the current rounding mode. In native code, the
     default rounding mode is "round half to even," and we expect that no program will
@@ -42,7 +42,7 @@ external iround_current
   :  (float[@unboxed])
   -> (int64[@unboxed])
   = "caml_sse2_cast_float64_int64_bytecode" "caml_sse2_cast_float64_int64"
-[@@noalloc]
+[@@noalloc] [@@no_effects] [@@no_coeffects]
 
 module Unboxed : sig
   external min
@@ -50,18 +50,18 @@ module Unboxed : sig
     -> (float#[@unboxed])
     -> (float#[@unboxed])
     = "caml_sse2_float64_min_bytecode" "caml_sse2_float64_min"
-  [@@noalloc]
+  [@@noalloc] [@@no_effects] [@@no_coeffects]
 
   external max
     :  (float#[@unboxed])
     -> (float#[@unboxed])
     -> (float#[@unboxed])
     = "caml_sse2_float64_max_bytecode" "caml_sse2_float64_max"
-  [@@noalloc]
+  [@@noalloc] [@@no_effects] [@@no_coeffects]
 
   external iround_current
     :  (float#[@unboxed])
     -> (int64#[@unboxed])
     = "caml_sse2_cast_float64_int64_bytecode" "caml_sse2_cast_float64_int64"
-  [@@noalloc]
+  [@@noalloc] [@@no_effects] [@@no_coeffects]
 end

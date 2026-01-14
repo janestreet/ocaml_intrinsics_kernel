@@ -15,14 +15,14 @@ module Stubs = struct
     -> (int[@untagged])
     @@ portable
     = "caml_int_clz" "caml_int_clz_tagged_to_untagged"
-  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
+  [@@noalloc] [@@no_effects] [@@no_coeffects]
 
   external count_leading_zeros2
     :  int
     -> int
     @@ portable
     = "caml_int_clz" "caml_int_clz_untagged_to_untagged"
-  [@@untagged] [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
+  [@@untagged] [@@noalloc] [@@no_effects] [@@no_coeffects]
 
   (** [count_set_bits n] returns the number of bits that are 1 in [n]. *)
   external count_set_bits
@@ -30,14 +30,14 @@ module Stubs = struct
     -> (int[@untagged])
     @@ portable
     = "caml_int_popcnt" "caml_int_popcnt_tagged_to_untagged"
-  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
+  [@@noalloc] [@@no_effects] [@@no_coeffects]
 
   external count_set_bits2
     :  int
     -> int
     @@ portable
     = "caml_int_popcnt" "caml_int_popcnt_untagged_to_untagged"
-  [@@untagged] [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
+  [@@untagged] [@@noalloc] [@@no_effects] [@@no_coeffects]
 
   (** [count_trailing_zeros n] returns the number of least-significant zero bits before
       the least significant set bit in [n]. If [n] is 0, the result is the number of bits
@@ -47,7 +47,7 @@ module Stubs = struct
     -> int
     @@ portable
     = "caml_int_ctz" "caml_int_ctz_untagged_to_untagged"
-  [@@untagged] [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
+  [@@untagged] [@@noalloc] [@@no_effects] [@@no_coeffects]
 end
 
 module Naive = Naive_ints.Make (struct
