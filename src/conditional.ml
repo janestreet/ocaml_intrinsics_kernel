@@ -5,7 +5,7 @@ external select_value
   : 'a.
   bool -> ('a[@local_opt]) -> ('a[@local_opt]) -> ('a[@local_opt])
   = "caml_csel_value"
-[@@noalloc] [@@no_effects] [@@no_coeffects] [@@builtin]
+[@@noalloc] [@@no_effects] [@@no_coeffects]
 
 external select_int
   :  bool
@@ -13,7 +13,7 @@ external select_int
   -> (int[@untagged])
   -> (int[@untagged])
   = "caml_csel_value" "caml_csel_int_untagged"
-[@@noalloc] [@@no_effects] [@@no_coeffects] [@@builtin]
+[@@noalloc] [@@no_effects] [@@no_coeffects]
 
 external select_int64
   :  bool
@@ -21,7 +21,7 @@ external select_int64
   -> (int64[@unboxed])
   -> (int64[@unboxed])
   = "caml_csel_value" "caml_csel_int64_unboxed"
-[@@noalloc] [@@no_effects] [@@no_coeffects] [@@builtin]
+[@@noalloc] [@@no_effects] [@@no_coeffects]
 
 external select_int32
   :  bool
@@ -29,7 +29,7 @@ external select_int32
   -> (int32[@unboxed])
   -> (int32[@unboxed])
   = "caml_csel_value" "caml_csel_int32_unboxed"
-[@@noalloc] [@@no_effects] [@@no_coeffects] [@@builtin]
+[@@noalloc] [@@no_effects] [@@no_coeffects]
 
 external select_nativeint
   :  bool
@@ -37,7 +37,7 @@ external select_nativeint
   -> (nativeint[@unboxed])
   -> (nativeint[@unboxed])
   = "caml_csel_value" "caml_csel_nativeint_unboxed"
-[@@noalloc] [@@no_effects] [@@no_coeffects] [@@builtin]
+[@@noalloc] [@@no_effects] [@@no_coeffects]
 
 module Unboxed = struct
   external select_int64
@@ -46,7 +46,7 @@ module Unboxed = struct
     -> (int64[@unboxed])
     -> (int64[@unboxed])
     = "caml_csel_value" "caml_csel_int64_unboxed"
-  [@@noalloc] [@@no_effects] [@@no_coeffects] [@@builtin]
+  [@@noalloc] [@@no_effects] [@@no_coeffects]
 
   external select_int32
     :  bool
@@ -54,7 +54,7 @@ module Unboxed = struct
     -> (int32[@unboxed])
     -> (int32[@unboxed])
     = "caml_csel_value" "caml_csel_int32_unboxed"
-  [@@noalloc] [@@no_effects] [@@no_coeffects] [@@builtin]
+  [@@noalloc] [@@no_effects] [@@no_coeffects]
 
   external select_nativeint
     :  bool
@@ -62,5 +62,5 @@ module Unboxed = struct
     -> (nativeint[@unboxed])
     -> (nativeint[@unboxed])
     = "caml_csel_value" "caml_csel_nativeint_unboxed"
-  [@@noalloc] [@@no_effects] [@@no_coeffects] [@@builtin]
+  [@@noalloc] [@@no_effects] [@@no_coeffects]
 end
