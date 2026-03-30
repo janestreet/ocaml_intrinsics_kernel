@@ -1,65 +1,40 @@
-(** X86 docs say:
+(** Equivalent to [if x < y then x else y]. This operation has atypical NaN handling: if
+    either [x] or [y] is a NaN, [min] returns [y].
 
-    If only one value is a NaN (SNaN or QNaN) for this instruction, the second source
-    operand, either a NaN or a valid floating-point value is written to the result.
+    On amd64, this compiles to [minsd xmm0, xmm1]. *)
+val min : float -> float -> float
 
-    So we have to be VERY careful how we use these! *)
+(** Equivalent to [if x > y then x else y]. This operation has atypical NaN handling: if
+    either [x] or [y] is a NaN, [max] returns [y].
 
-(** Equivalent to [if x < y then x else y].
-
-    On an x86-64 machine, this compiles to [minsd xmm0, xmm1]. On ARM, this calls a C
-    implementation. *)
-external min
-  :  (float[@unboxed])
-  -> (float[@unboxed])
-  -> (float[@unboxed])
-  = "caml_sse2_float64_min_bytecode" "caml_sse2_float64_min"
-[@@noalloc] [@@no_effects] [@@no_coeffects]
-
-(** Equivalent to [if x > y then x else y].
-
-    On an x86-64 machine, this compiles to [maxsd xmm0, xmm1]. On ARM, this calls a C
-    implementation. *)
-external max
-  :  (float[@unboxed])
-  -> (float[@unboxed])
-  -> (float[@unboxed])
-  = "caml_sse2_float64_max_bytecode" "caml_sse2_float64_max"
-[@@noalloc] [@@no_effects] [@@no_coeffects]
+    On amd64, this compiles to [maxsd xmm0, xmm1]. *)
+val max : float -> float -> float
 
 (** Rounds a [float] to an [int64] using the current rounding mode. In native code, the
     default rounding mode is "round half to even," and we expect that no program will
     change the rounding mode.
 
     If the argument is NaN or infinite or if the rounded value cannot be represented, the
-    result is unspecified.
+    result is unspecified. *)
+val iround_current : float -> int64
 
-    On an x86-64 machine, this compiles to [cvtsd2si rax, xmm0]. On ARM, this calls a C
-    implementation. *)
-external iround_current
-  :  (float[@unboxed])
-  -> (int64[@unboxed])
-  = "caml_sse2_cast_float64_int64_bytecode" "caml_sse2_cast_float64_int64"
-[@@noalloc] [@@no_effects] [@@no_coeffects]
+(** Rounds a [float] to an integer [float] using the current rounding mode. In native
+    code, the default rounding mode is "round half to even," and we expect that no program
+    will change the rounding mode. *)
+val round_current : float -> float
+
+(** Rounds a [float] to an integer [float] using the mode specified in the function name. *)
+
+val round_down : float -> float
+val round_up : float -> float
+val round_towards_zero : float -> float
 
 module Unboxed : sig
-  external min
-    :  (float[@unboxed])
-    -> (float[@unboxed])
-    -> (float[@unboxed])
-    = "caml_sse2_float64_min_bytecode" "caml_sse2_float64_min"
-  [@@noalloc] [@@no_effects] [@@no_coeffects]
-
-  external max
-    :  (float[@unboxed])
-    -> (float[@unboxed])
-    -> (float[@unboxed])
-    = "caml_sse2_float64_max_bytecode" "caml_sse2_float64_max"
-  [@@noalloc] [@@no_effects] [@@no_coeffects]
-
-  external iround_current
-    :  (float[@unboxed])
-    -> (int64[@unboxed])
-    = "caml_sse2_cast_float64_int64_bytecode" "caml_sse2_cast_float64_int64"
-  [@@noalloc] [@@no_effects] [@@no_coeffects]
+  val min : float -> float -> float
+  val max : float -> float -> float
+  val iround_current : float -> int64
+  val round_current : float -> float
+  val round_down : float -> float
+  val round_up : float -> float
+  val round_towards_zero : float -> float
 end

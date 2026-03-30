@@ -1,15 +1,4 @@
-(** The are two version of [count_leading_zeros], [count_set_bits] each, which differ in
-    their native code implementation. The first version takes as input a tagged integer
-    and the second version takes as input an untagged integer. Generally, the first
-    version (that operates on a tagged integer) is faster, but if the integer is already
-    untagged, it may be faster to use the second version. *)
-
 module Stubs = struct
-  let available = Common.available
-
-  (** [count_leading_zeros n] returns the number of most-significant zero bits before the
-      most significant set bit in [n]. If [n] is 0, the result is the number of bits in
-      [n], that is 31 or 63, depending on the target. *)
   external count_leading_zeros
     :  int
     -> (int[@untagged])
@@ -35,9 +24,6 @@ module Stubs = struct
     = "caml_int_popcnt" "caml_int_popcnt_untagged_to_untagged"
   [@@untagged] [@@noalloc] [@@no_effects] [@@no_coeffects]
 
-  (** [count_trailing_zeros n] returns the number of least-significant zero bits before
-      the least significant set bit in [n]. If [n] is 0, the result is the number of bits
-      in [n], that is 31 or 63, depending on the target. *)
   external count_trailing_zeros
     :  int
     -> int
@@ -45,43 +31,32 @@ module Stubs = struct
   [@@untagged] [@@noalloc] [@@no_effects] [@@no_coeffects]
 end
 
-module Naive = Naive_ints.Make (struct
-    include Stdlib.Int
-
-    external compare : t -> t -> int = "%compare"
-    external equal : t -> t -> bool = "%equal"
-
-    let bitwidth = Sys.int_size
-    let to_int = Fun.id
-    let of_int t = t
-  end)
-
 let[@inline always] count_leading_zeros n =
-  match Stubs.available with
+  match Common.available with
   | true -> Stubs.count_leading_zeros n
-  | false -> Naive.count_leading_zeros n
+  | false -> Emu.Int.count_leading_zeros n
 ;;
 
 let[@inline always] count_leading_zeros2 n =
-  match Stubs.available with
+  match Common.available with
   | true -> Stubs.count_leading_zeros2 n
-  | false -> Naive.count_leading_zeros n
+  | false -> Emu.Int.count_leading_zeros n
 ;;
 
 let[@inline always] count_set_bits2 n =
-  match Stubs.available with
+  match Common.available with
   | true -> Stubs.count_set_bits2 n
-  | false -> Naive.count_set_bits n
+  | false -> Emu.Int.count_set_bits n
 ;;
 
 let[@inline always] count_trailing_zeros n =
-  match Stubs.available with
+  match Common.available with
   | true -> Stubs.count_trailing_zeros n
-  | false -> Naive.count_trailing_zeros n
+  | false -> Emu.Int.count_trailing_zeros n
 ;;
 
 let[@inline always] count_set_bits n =
-  match Stubs.available with
+  match Common.available with
   | true -> Stubs.count_set_bits n
-  | false -> Naive.count_set_bits n
+  | false -> Emu.Int.count_set_bits n
 ;;

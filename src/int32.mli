@@ -44,4 +44,11 @@ val shift_right : int32 -> int32 -> int32
     shift: zeroes are inserted in the vacated bits regardless of the sign of [x]. *)
 val shift_right_logical : int32 -> int32 -> int32
 
-module Naive : Naive_ints.S with type t = int32
+(** Intrinsics for unboxed types. *)
+module Unboxed : sig
+  val count_leading_zeros : int32 -> int32
+  val count_leading_zeros_nonzero_arg : int32 -> int32
+  val count_trailing_zeros : int32 -> int32
+  val count_trailing_zeros_nonzero_arg : int32 -> int32
+  val count_set_bits : int32 -> int32
+end
