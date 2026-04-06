@@ -4,35 +4,35 @@ module Stubs = struct
     -> (int32[@unboxed])
     @@ portable
     = "caml_int32_clz" "caml_int32_clz_unboxed_to_untagged"
-  [@@noalloc] [@@no_effects] [@@no_coeffects]
+  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
   external count_leading_zeros_nonzero_arg
     :  (int32[@unboxed] [@local_opt])
     -> (int32[@unboxed])
     @@ portable
     = "caml_int32_clz" "caml_int32_clz_nonzero_unboxed_to_untagged"
-  [@@noalloc] [@@no_effects] [@@no_coeffects]
+  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
   external count_trailing_zeros
     :  (int32[@unboxed] [@local_opt])
     -> (int32[@unboxed])
     @@ portable
     = "caml_int32_ctz" "caml_int32_ctz_unboxed_to_untagged"
-  [@@noalloc] [@@no_effects] [@@no_coeffects]
+  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
   external count_trailing_zeros_nonzero_arg
     :  (int32[@unboxed] [@local_opt])
     -> (int32[@unboxed])
     @@ portable
     = "caml_int32_ctz" "caml_int32_ctz_nonzero_unboxed_to_untagged"
-  [@@noalloc] [@@no_effects] [@@no_coeffects]
+  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
   external count_set_bits
     :  (int32[@unboxed] [@local_opt])
     -> (int32[@unboxed])
     @@ portable
     = "caml_int32_popcnt" "caml_int32_popcnt_unboxed_to_untagged"
-  [@@noalloc] [@@no_effects] [@@no_coeffects]
+  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
   external shift_left
     :  (int32[@local_opt])
@@ -40,7 +40,7 @@ module Stubs = struct
     -> (int32[@local_opt])
     @@ portable
     = "caml_int32_shift_left_by_int32" "caml_int32_shift_left_by_int32_unboxed"
-  [@@noalloc] [@@no_effects] [@@no_coeffects] [@@unboxed]
+  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects] [@@unboxed]
 
   external shift_right
     :  (int32[@local_opt])
@@ -48,7 +48,7 @@ module Stubs = struct
     -> (int32[@local_opt])
     @@ portable
     = "caml_int32_shift_right_by_int32" "caml_int32_shift_right_by_int32_unboxed"
-  [@@noalloc] [@@no_effects] [@@no_coeffects] [@@unboxed]
+  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects] [@@unboxed]
 
   external shift_right_logical
     :  (int32[@local_opt])
@@ -57,7 +57,7 @@ module Stubs = struct
     @@ portable
     = "caml_int32_shift_right_logical_by_int32"
       "caml_int32_shift_right_logical_by_int32_unboxed"
-  [@@noalloc] [@@no_effects] [@@no_coeffects] [@@unboxed]
+  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects] [@@unboxed]
 end
 
 let[@inline always] count_leading_zeros n =
@@ -118,35 +118,35 @@ module Unboxed = struct
       -> (int32#[@unboxed])
       @@ portable
       = "caml_int32_clz" "caml_int32_clz_unboxed_to_untagged"
-    [@@noalloc] [@@no_effects] [@@no_coeffects]
+    [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
     external count_leading_zeros_nonzero_arg
       :  (int32#[@unboxed])
       -> (int32#[@unboxed])
       @@ portable
       = "caml_int32_clz" "caml_int32_clz_nonzero_unboxed_to_untagged"
-    [@@noalloc] [@@no_effects] [@@no_coeffects]
+    [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
     external count_trailing_zeros
       :  (int32#[@unboxed])
       -> (int32#[@unboxed])
       @@ portable
       = "caml_int32_ctz" "caml_int32_ctz_unboxed_to_untagged"
-    [@@noalloc] [@@no_effects] [@@no_coeffects]
+    [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
     external count_trailing_zeros_nonzero_arg
       :  (int32#[@unboxed])
       -> (int32#[@unboxed])
       @@ portable
       = "caml_int32_ctz" "caml_int32_ctz_nonzero_unboxed_to_untagged"
-    [@@noalloc] [@@no_effects] [@@no_coeffects]
+    [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
     external count_set_bits
       :  (int32#[@unboxed])
       -> (int32#[@unboxed])
       @@ portable
       = "caml_int32_popcnt" "caml_int32_popcnt_unboxed_to_untagged"
-    [@@noalloc] [@@no_effects] [@@no_coeffects]
+    [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
   end
 
   let[@inline always] count_leading_zeros n =
