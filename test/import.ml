@@ -4,7 +4,7 @@ open Stdio
 module type Hum = sig
   type t
 
-  val to_string_hum : ?delimiter:char -> local_ t -> string
+  val to_string_hum : ?delimiter:char -> t @ local -> string
 end
 
 module Hum_string (H : Hum) = struct
@@ -30,15 +30,15 @@ let test_shifts
   (module Input : Hum with type t = t)
   (module Shift : Hum with type t = t)
   ~name
-  ~(op : local_ t -> local_ t -> local_ t)
-  ~(expected_op : local_ t -> local_ t -> local_ t)
+  ~(op : t @ local -> t @ local -> t @ local)
+  ~(expected_op : t @ local -> t @ local -> t @ local)
   x
   y
   =
   let module Input = Hum_string (Input) in
   let module Shift = Hum_string (Shift) in
-  let local_ expected = expected_op x y in
-  let local_ res = op x y in
+  let expected = expected_op x y in
+  let res = op x y in
   print_endline [%string "%{x#Input} %{name} by %{y#Shift} ="];
   print_endline [%string.global "%{res#Input}"];
   if Stdlib.compare res expected <> 0

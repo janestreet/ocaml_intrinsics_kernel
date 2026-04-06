@@ -3,29 +3,29 @@
 (** [count_leading_zeros n] returns the number of most-significant zero bits before the
     most significant set bit in [n]. If [n] is 0, the result is the number of bits in [n],
     that is 32 or 64, depending on the target. *)
-val count_leading_zeros : local_ nativeint -> nativeint
+val count_leading_zeros : nativeint @ local -> nativeint
 
 (** Same as [count_leading_zeros] except if the argument is zero, then the result is
     undefined. Emits more efficient code.
 
     This is no longer needed when using an flambda-backend compiler, which translates
     [count_leading_zeros] to LZCNT by default (amd64). *)
-val count_leading_zeros_nonzero_arg : local_ nativeint -> nativeint
+val count_leading_zeros_nonzero_arg : nativeint @ local -> nativeint
 
 (** [count_trailing_zeros n] returns the number of least-significant zero bits before the
     least significant set bit in [n]. If [n] is 0, the result is the number of bits in
     [n], that is 32 or 64, depending on the target. *)
-val count_trailing_zeros : local_ nativeint -> nativeint
+val count_trailing_zeros : nativeint @ local -> nativeint
 
 (** Same as [count_trailing_zeros] except if the argument is zero, then the result is
     undefined. Emits more efficient code.
 
     This is no longer needed when using an flambda-backend compiler, which translates
     [count_trailing_zeros] to TZCNT by default (amd64). *)
-val count_trailing_zeros_nonzero_arg : local_ nativeint -> nativeint
+val count_trailing_zeros_nonzero_arg : nativeint @ local -> nativeint
 
 (** [count_set_bits n] returns the number of bits that are 1 in [n]. *)
-val count_set_bits : local_ nativeint -> nativeint
+val count_set_bits : nativeint @ local -> nativeint
 
 (** Shift operations below differ from the corresponding [Stdlib.Nativeint.shift_*]
     operations in two ways:
@@ -36,14 +36,21 @@ val count_set_bits : local_ nativeint -> nativeint
         the first argument. *)
 
 (** [shift_left x y] shifts [x] to the left by [y & (bitwidth-1)] bits. *)
-val shift_left : local_ nativeint -> local_ nativeint -> local_ nativeint
+val shift_left : nativeint @ local -> nativeint @ local -> nativeint @ local
 
 (** [Nativeint.shift_right x y] shifts [x] to the right by [y] bits. This is an arithmetic
     shift: the sign bit of [x] is replicated and inserted in the vacated bits. *)
-val shift_right : local_ nativeint -> local_ nativeint -> local_ nativeint
+val shift_right : nativeint @ local -> nativeint @ local -> nativeint @ local
 
 (** [Nativeint.shift_right_logical x y] shifts [x] to the right by [y] bits. This is a
     logical shift: zeroes are inserted in the vacated bits regardless of the sign of [x]. *)
-val shift_right_logical : local_ nativeint -> local_ nativeint -> local_ nativeint
+val shift_right_logical : nativeint @ local -> nativeint @ local -> nativeint @ local
 
-module Naive : Naive_ints.S with type t = nativeint
+(** Intrinsics for unboxed types. *)
+module Unboxed : sig
+  val count_leading_zeros : nativeint# -> nativeint#
+  val count_leading_zeros_nonzero_arg : nativeint# -> nativeint#
+  val count_trailing_zeros : nativeint# -> nativeint#
+  val count_trailing_zeros_nonzero_arg : nativeint# -> nativeint#
+  val count_set_bits : nativeint# -> nativeint#
+end

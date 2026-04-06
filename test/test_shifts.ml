@@ -23,7 +23,7 @@ module%test Int64 = struct
   let%expect_test "shift_left int64" =
     test
       ~op:I.Int64.shift_left
-      ~expected_op:I.Int64.Naive.shift_left
+      ~expected_op:I.For_testing.Int64.shift_left
       ~name:"Int64.shift_left";
     [%expect
       {|
@@ -306,7 +306,7 @@ module%test Int64 = struct
   let%expect_test "shift_right int64" =
     test
       ~op:I.Int64.shift_right
-      ~expected_op:I.Int64.Naive.shift_right
+      ~expected_op:I.For_testing.Int64.shift_right
       ~name:"Int64.shift_right";
     [%expect
       {|
@@ -589,7 +589,7 @@ module%test Int64 = struct
   let%expect_test "shift_right_logical int64" =
     test
       ~op:I.Int64.shift_right_logical
-      ~expected_op:I.Int64.Naive.shift_right_logical
+      ~expected_op:I.For_testing.Int64.shift_right_logical
       ~name:"Int64.shift_right_logical";
     [%expect
       {|
@@ -888,7 +888,7 @@ module%test Int32 = struct
   let%expect_test "shift_left int32" =
     test
       ~op:I.Int32.shift_left
-      ~expected_op:I.Int32.Naive.shift_left
+      ~expected_op:I.For_testing.Int32.shift_left
       ~name:"Int32.shift_left";
     [%expect
       {|
@@ -1171,7 +1171,7 @@ module%test Int32 = struct
   let%expect_test "shift_right int32" =
     test
       ~op:I.Int32.shift_right
-      ~expected_op:I.Int32.Naive.shift_right
+      ~expected_op:I.For_testing.Int32.shift_right
       ~name:"Int32.shift_right";
     [%expect
       {|
@@ -1454,7 +1454,7 @@ module%test Int32 = struct
   let%expect_test "shift_right_logical int32" =
     test
       ~op:I.Int32.shift_right_logical
-      ~expected_op:I.Int32.Naive.shift_right_logical
+      ~expected_op:I.For_testing.Int32.shift_right_logical
       ~name:"Int32.shift_right_logical";
     [%expect
       {|
@@ -1753,7 +1753,7 @@ module%test [@tags "64-bits-only"] Nativeint_arch64 = struct
   let%expect_test "shift_left nativeint" =
     test
       ~op:I.Nativeint.shift_left
-      ~expected_op:I.Nativeint.Naive.shift_left
+      ~expected_op:I.For_testing.Nativeint.shift_left
       ~name:"Nativeint.shift_left";
     [%expect
       {|
@@ -2036,7 +2036,7 @@ module%test [@tags "64-bits-only"] Nativeint_arch64 = struct
   let%expect_test "shift_right nativeint" =
     test
       ~op:I.Nativeint.shift_right
-      ~expected_op:I.Nativeint.Naive.shift_right
+      ~expected_op:I.For_testing.Nativeint.shift_right
       ~name:"Nativeint.shift_right";
     [%expect
       {|
@@ -2319,7 +2319,7 @@ module%test [@tags "64-bits-only"] Nativeint_arch64 = struct
   let%expect_test "shift_right_logical nativeint" =
     test
       ~op:I.Nativeint.shift_right_logical
-      ~expected_op:I.Nativeint.Naive.shift_right_logical
+      ~expected_op:I.For_testing.Nativeint.shift_right_logical
       ~name:"Nativeint.shift_right_logical";
     [%expect
       {|
@@ -2618,7 +2618,7 @@ module%test [@tags "32-bits-only"] Nativeint_arch32 = struct
   let%expect_test "shift_left Nativeint arch32" =
     test
       ~op:I.Nativeint.shift_left
-      ~expected_op:I.Nativeint.Naive.shift_left
+      ~expected_op:I.For_testing.Nativeint.shift_left
       ~name:"Nativeint.shift_left";
     [%expect {| |}];
     ()
@@ -2627,7 +2627,7 @@ module%test [@tags "32-bits-only"] Nativeint_arch32 = struct
   let%expect_test "shift_right Nativeint arch32" =
     test
       ~op:I.Nativeint.shift_right
-      ~expected_op:I.Nativeint.Naive.shift_right
+      ~expected_op:I.For_testing.Nativeint.shift_right
       ~name:"Nativeint.shift_right";
     [%expect {| |}];
     ()
@@ -2636,7 +2636,7 @@ module%test [@tags "32-bits-only"] Nativeint_arch32 = struct
   let%expect_test "shift_right_logical Nativeint arch32" =
     test
       ~op:I.Nativeint.shift_right_logical
-      ~expected_op:I.Nativeint.Naive.shift_right_logical
+      ~expected_op:I.For_testing.Nativeint.shift_right_logical
       ~name:"Nativeint.shift_right_logical";
     [%expect {| |}];
     ()
