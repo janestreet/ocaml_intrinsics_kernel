@@ -19,7 +19,7 @@
 #define int64_popcnt __builtin_popcountll
 #else /* defined(__GNUC__) */
 #ifdef _MSC_VER
-#warning "Functionality on Windows has not been tested"
+#pragma message ("Functionality on Windows may need additional testing")
 #include <intrin.h>
 #pragma intrinsic(_BitScanReverse)
 
@@ -82,7 +82,7 @@ intnat naive_int64_ctz(uint64_t v)
 intnat naive_int32_ctz(uint32_t v)
 {
   unsigned long n;
-  if (_BitScanForward(&n, v)) return n
+  if (_BitScanForward(&n, v)) return n;
   else return 32;
 }
 
@@ -115,7 +115,7 @@ intnat naive_int32_popcnt (uint32_t x)
 #define int64_ctz naive_int64_ctz
 #define int32_popcnt naive_int32_popcnt
 #define int64_popcnt naive_int64_popcnt
-#elseif /* _MSC_VER */
+#else /* _MSC_VER */
 #error "Target not supported"
 #endif /* _MSC_VER */
 #endif /* defined(__GNUC__) */
