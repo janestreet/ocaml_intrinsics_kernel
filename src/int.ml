@@ -3,32 +3,32 @@ module Stubs = struct
     :  int
     -> (int[@untagged])
     = "caml_int_clz" "caml_int_clz_tagged_to_untagged"
-  [@@noalloc] [@@no_effects] [@@no_coeffects]
+  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
   external count_leading_zeros2
     :  int
     -> int
     = "caml_int_clz" "caml_int_clz_untagged_to_untagged"
-  [@@untagged] [@@noalloc] [@@no_effects] [@@no_coeffects]
+  [@@untagged] [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
   (** [count_set_bits n] returns the number of bits that are 1 in [n]. *)
   external count_set_bits
     :  int
     -> (int[@untagged])
     = "caml_int_popcnt" "caml_int_popcnt_tagged_to_untagged"
-  [@@noalloc] [@@no_effects] [@@no_coeffects]
+  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
   external count_set_bits2
     :  int
     -> int
     = "caml_int_popcnt" "caml_int_popcnt_untagged_to_untagged"
-  [@@untagged] [@@noalloc] [@@no_effects] [@@no_coeffects]
+  [@@untagged] [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
   external count_trailing_zeros
     :  int
     -> int
     = "caml_int_ctz" "caml_int_ctz_untagged_to_untagged"
-  [@@untagged] [@@noalloc] [@@no_effects] [@@no_coeffects]
+  [@@untagged] [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 end
 
 let[@inline always] count_leading_zeros n =
