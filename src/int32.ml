@@ -6,25 +6,11 @@ module Stubs = struct
     = "caml_int32_clz" "caml_int32_clz_unboxed_to_untagged"
   [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
-  external count_leading_zeros_nonzero_arg
-    :  (int32[@unboxed] [@local_opt])
-    -> (int32[@unboxed])
-    @@ portable
-    = "caml_int32_clz" "caml_int32_clz_nonzero_unboxed_to_untagged"
-  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
-
   external count_trailing_zeros
     :  (int32[@unboxed] [@local_opt])
     -> (int32[@unboxed])
     @@ portable
     = "caml_int32_ctz" "caml_int32_ctz_unboxed_to_untagged"
-  [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
-
-  external count_trailing_zeros_nonzero_arg
-    :  (int32[@unboxed] [@local_opt])
-    -> (int32[@unboxed])
-    @@ portable
-    = "caml_int32_ctz" "caml_int32_ctz_nonzero_unboxed_to_untagged"
   [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
   external count_set_bits
@@ -66,21 +52,9 @@ let[@inline always] count_leading_zeros n =
   | false -> Emu.Int32.count_leading_zeros n
 ;;
 
-let[@inline always] count_leading_zeros_nonzero_arg n =
-  match Common.available with
-  | true -> Stubs.count_leading_zeros_nonzero_arg n
-  | false -> Emu.Int32.count_leading_zeros n
-;;
-
 let[@inline always] count_trailing_zeros n =
   match Common.available with
   | true -> Stubs.count_trailing_zeros n
-  | false -> Emu.Int32.count_trailing_zeros n
-;;
-
-let[@inline always] count_trailing_zeros_nonzero_arg n =
-  match Common.available with
-  | true -> Stubs.count_trailing_zeros_nonzero_arg n
   | false -> Emu.Int32.count_trailing_zeros n
 ;;
 
@@ -120,25 +94,11 @@ module Unboxed = struct
       = "caml_int32_clz" "caml_int32_clz_unboxed_to_untagged"
     [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
-    external count_leading_zeros_nonzero_arg
-      :  (int32#[@unboxed])
-      -> (int32#[@unboxed])
-      @@ portable
-      = "caml_int32_clz" "caml_int32_clz_nonzero_unboxed_to_untagged"
-    [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
-
     external count_trailing_zeros
       :  (int32#[@unboxed])
       -> (int32#[@unboxed])
       @@ portable
       = "caml_int32_ctz" "caml_int32_ctz_unboxed_to_untagged"
-    [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
-
-    external count_trailing_zeros_nonzero_arg
-      :  (int32#[@unboxed])
-      -> (int32#[@unboxed])
-      @@ portable
-      = "caml_int32_ctz" "caml_int32_ctz_nonzero_unboxed_to_untagged"
     [@@noalloc] [@@builtin] [@@no_effects] [@@no_coeffects]
 
     external count_set_bits
@@ -155,21 +115,9 @@ module Unboxed = struct
     | false -> unbox (Emu.Int32.count_leading_zeros (box n))
   ;;
 
-  let[@inline always] count_leading_zeros_nonzero_arg n =
-    match Common.available with
-    | true -> Stubs.count_leading_zeros_nonzero_arg n
-    | false -> unbox (Emu.Int32.count_leading_zeros (box n))
-  ;;
-
   let[@inline always] count_trailing_zeros n =
     match Common.available with
     | true -> Stubs.count_trailing_zeros n
-    | false -> unbox (Emu.Int32.count_trailing_zeros (box n))
-  ;;
-
-  let[@inline always] count_trailing_zeros_nonzero_arg n =
-    match Common.available with
-    | true -> Stubs.count_trailing_zeros_nonzero_arg n
     | false -> unbox (Emu.Int32.count_trailing_zeros (box n))
   ;;
 
