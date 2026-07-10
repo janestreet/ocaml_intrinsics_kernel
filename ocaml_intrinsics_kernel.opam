@@ -15,6 +15,9 @@ depends: [
   "dune" {>= "3.17.0"}
 ]
 available: arch != "x86_32"
+conflicts: [
+  "oxcaml-compiler" {< "5.2.0minus39"}
+]
 synopsis: "Intrinsics"
 description: "
 Provides functions to invoke amd64 instructions (such as cmov, min/maxsd, popcnt)
