@@ -2,6 +2,7 @@
 #include "caml/alloc.h"
 #include "caml/misc.h"
 #include "caml/mlvalues.h"
+#include "caml/version.h"
 
 
 #if defined(__GNUC__)
@@ -202,10 +203,12 @@ intnat caml_int_clz_tagged_to_untagged(value v1)
 #endif
 }
 
+#if OCAML_VERSION < 50600
 CAMLprim value caml_int_clz(value v1)
 {
   return Val_long(caml_int_clz_tagged_to_untagged(v1));
 }
+#endif
 
 /* Takes an untagged input and returns untagged output. */
 intnat caml_int_ctz_untagged_to_untagged(intnat v1)
@@ -220,10 +223,12 @@ intnat caml_int_ctz_untagged_to_untagged(intnat v1)
 #endif
 }
 
+#if OCAML_VERSION < 50600
 CAMLprim value caml_int_ctz(value v1)
 {
   return Val_long(caml_int_ctz_untagged_to_untagged(Long_val(v1)));
 }
+#endif
 
 /* Takes untagged int and returns untagged int. */
 intnat caml_int_popcnt_untagged_to_untagged(intnat v1)
